@@ -23,6 +23,11 @@ class WeatherViewModel: NSObject, ObservableObject, LocationServiceDelegate {
     
     
     init(weatherService: WeatherServiceProtocol, locationService: LocationServiceProtocol) {
+        if let path = Bundle.main.path(forResource: "Secret", ofType: "plist") {
+            if let resource = NSDictionary(contentsOfFile: path) as? [String:String] {
+                Constant.apiKey = resource["WEATHER_API_KEY"] ?? ""
+            }
+        }
         self.weatherService = weatherService
         self.locationService = locationService
         super.init()
